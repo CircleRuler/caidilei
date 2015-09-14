@@ -1,0 +1,304 @@
+﻿<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="lalala.css" />
+	<meta http-equiv="refresh" content="1000">
+<script>
+	function drawMap(){
+		for(i=1;i<=9;i++) 
+		{ 
+			for(j=1;j<=9;j++) 
+			{ 
+				aa[i][j]=1
+			} 
+		} 
+		aa[MapY][MapX]=9
+		document.getElementById("array").innerHTML="";
+		document.getElementById("score").innerHTML='<br/>score='+score;
+		for (x in aa){
+			document.getElementById("array").innerHTML+=aa[x]+'<br/>'
+		}
+		for(i=1;i<=9;i++) { 
+			for(j=1;j<=9;j++) { 
+				document.getElementById("bw"+i+j).style.backgroundColor='#'+aa[i][j]+aa[i][j]+aa[i][j]
+				/* document.getElementById("bw"+i+j).innerHTML=aa[i][j] */
+				if(aa[i][j]==1 && bb[i][j]==0){
+					document.getElementById("bw"+i+j).style.backgroundColor='#222'
+				}
+				if(score%10==0){
+					if(Math.abs(DeathX-MapX)+Math.abs(DeathY-MapY)!=1){
+					document.getElementById("bw"+MapY+MapX).innerHTML=Math.abs(DeathX-MapX)+Math.abs(DeathY-MapY);
+					score+=1;
+					}
+				}
+			}
+		}
+		
+	}
+	function createNew(ceng)
+	{
+		for(var i=5-ceng;i<=ceng+5;i++)
+		{
+			for(var j=5-ceng;j<=ceng+5;j++)
+			{
+				aa[i][j]=Math.round(Math.random()*9)
+			}
+		}
+	}
+
+	document.onkeyup=function showKeyUp(evt)  {
+		evt = (evt) ? evt : ((window.event) ? window.event : "")
+		if(evt.keyCode == '37' ){ //如果按下←键 
+		//在这里设置你想绑定的事件 
+			if(MapX>=2){
+				MapX=MapX-1;
+			}
+		}
+		if(evt.keyCode == '38' ){ //如果按下↑键 
+		//在这里设置你想绑定的事件 
+			if(MapY>=2){
+				MapY=MapY-1;
+			}
+		} 
+		if(evt.keyCode == '39' ){ //如果按下→键 
+		//在这里设置你想绑定的事件 
+			if(MapX<=8){
+				MapX=MapX+1;
+			}
+		} 
+		if(evt.keyCode == '40' ){ //如果按下↓键 
+		//在这里设置你想绑定的事件 
+			if(MapY<=8){
+				MapY=MapY+1;
+			}
+		}
+		if (bb[MapY][MapX]==1){
+			score+=1;
+			bb[MapY][MapX]=0;
+		}
+		drawMap();
+		if (MapX==DeathX && MapY==DeathY)
+		{
+			clearInterval(timer);   
+			End();
+		}
+		
+	}
+	function End(){
+		document.onkeyup= none()
+		if(localStorage.highscore)
+		{
+			if(localStorage.highscore<score)
+			{
+				localStorage.highscore=score;
+			}
+		}
+		else{
+			localStorage.highscore=1;
+		}
+		document.getElementById("bw"+DeathY+DeathX).innerHTML='<img height="60px" src="bg.jpg">';
+		document.getElementById("attention").innerHTML="你死了,此轮得分是"+score;
+		document.getElementById("refresh").innerHTML='点我再试一次';
+		document.getElementById("refresh").style.border='1px solid white';
+		document.getElementById("bw"+DeathY+DeathX).style.backgroundColor='#00ff00';
+		document.getElementById("theworld").style.WebkitTransform='perspective(450px) rotateX(60deg) rotateY(0deg) rotate(0deg)';
+		for(i=1;i<=9;i++) { 
+			for(j=1;j<=9;j++) { 
+				if((i+j)%2==0){
+					document.getElementById("bw"+i+j).style.backgroundColor='#111'
+				}
+				else{
+					document.getElementById("bw"+i+j).style.backgroundColor='#ccc'
+				}
+			}
+		}
+		var cc=prompt("请输入你的名字,将会计入排行榜","不想输入名字的话点取消吧");
+		if(cc==null){cc='不愿意透露名字的许先生'};
+		localStorage.setItem("userName"+localStorage.pagecount, cc);
+		localStorage.setItem("userSCore"+localStorage.pagecount, score);
+	}
+	function none(){
+		document.getElementById("attention2").innerHTML='你已经死了!直接点上面的刷新!';
+	}
+</script>
+</head>
+<body>
+	<div id='theworld'>
+		<div id='bw11' class='b1' ></div>
+		<div id='bw12' class='w1' ></div>
+		<div id='bw13' class='b1' ></div>
+		<div id='bw14' class='w1' ></div>
+		<div id='bw15' class='b1' ></div>
+		<div id='bw16' class='w1' ></div>
+		<div id='bw17' class='b1' ></div>
+		<div id='bw18' class='w1' ></div>
+		<div id='bw19' class='w1' ></div>
+		
+		<div id='bw21' class='b2' ></div>
+		<div id='bw22' class='w2' ></div>
+		<div id='bw23' class='b2' ></div>
+		<div id='bw24' class='w2' ></div>
+		<div id='bw25' class='b2' ></div>
+		<div id='bw26' class='w2' ></div>
+		<div id='bw27' class='b2' ></div>
+		<div id='bw28' class='w2' ></div>
+		<div id='bw29' class='b2' ></div>
+		
+		<div id='bw31' class='b3' ></div>
+		<div id='bw32' class='w3' ></div>
+		<div id='bw33' class='b3' ></div>
+		<div id='bw34' class='w3' ></div>
+		<div id='bw35' class='b3' ></div>
+		<div id='bw36' class='w3' ></div>
+		<div id='bw37' class='b3' ></div>
+		<div id='bw38' class='w3' ></div>
+		<div id='bw39' class='b3' ></div>
+							   
+		<div id='bw41' class='b4' ></div>
+		<div id='bw42' class='w4' ></div>
+		<div id='bw43' class='b4' ></div>
+		<div id='bw44' class='w4' ></div>
+		<div id='bw45' class='b4' ></div>
+		<div id='bw46' class='w4' ></div>
+		<div id='bw47' class='b4' ></div>
+		<div id='bw48' class='w4' ></div>
+		<div id='bw49' class='b4' ></div>
+							   
+		<div id='bw51' class='b5' ></div>
+		<div id='bw52' class='w5' ></div>
+		<div id='bw53' class='b5' ></div>
+		<div id='bw54' class='w5' ></div>
+		<div id='bw55' class='b5' ></div>
+		<div id='bw56' class='w5' ></div>
+		<div id='bw57' class='b5' ></div>
+		<div id='bw58' class='w5' ></div>
+		<div id='bw59' class='b5' ></div>
+							   
+		<div id='bw61' class='b6' ></div>
+		<div id='bw62' class='w6' ></div>
+		<div id='bw63' class='b6' ></div>
+		<div id='bw64' class='w6' ></div>
+		<div id='bw65' class='b6' ></div>
+		<div id='bw66' class='w6' ></div>
+		<div id='bw67' class='b6' ></div>
+		<div id='bw68' class='w6' ></div>
+		<div id='bw69' class='b6' ></div>
+							   
+		<div id='bw71' class='b7' ></div>
+		<div id='bw72' class='w7' ></div>
+		<div id='bw73' class='b7' ></div>
+		<div id='bw74' class='w7' ></div>
+		<div id='bw75' class='b7' ></div>
+		<div id='bw76' class='w7' ></div>
+		<div id='bw77' class='b7' ></div>
+		<div id='bw78' class='w7' ></div>
+		<div id='bw79' class='b7' ></div>
+							   
+		<div id='bw81' class='b8' ></div>
+		<div id='bw82' class='w8' ></div>
+		<div id='bw83' class='b8' ></div>
+		<div id='bw84' class='w8' ></div>
+		<div id='bw85' class='b8' ></div>
+		<div id='bw86' class='w8' ></div>
+		<div id='bw87' class='b8' ></div>
+		<div id='bw88' class='w8' ></div>
+		<div id='bw89' class='b8' ></div>
+		
+		<div id='bw91' class='b8' ></div>
+		<div id='bw92' class='w8' ></div>
+		<div id='bw93' class='b8' ></div>
+		<div id='bw94' class='w8' ></div>
+		<div id='bw95' class='b8' ></div>
+		<div id='bw96' class='w8' ></div>
+		<div id='bw97' class='b8' ></div>
+		<div id='bw98' class='w8' ></div>
+		<div id='bw99' class='b9' ></div>
+	</div>
+	<div id="array"></div>
+	<div id="timer"></div>
+	<div id="score"></div>
+	<div id="highscore"></div>
+	<div id="attention" ></div>
+	<div id="refresh" onclick="location.reload()"></div>
+	<div id="attention2" ></div>
+	<div id="Listofscore" onclick="localStorage.clear()">排行榜</div>
+	<button  onclick="localStorage.clear();location.reload()">清除排行榜</button>
+<script> 
+	window.moveTo(300, 100);//移动窗口 
+window.resizeTo(400, 500);//改变大小 
+	var aa=new Array()
+	for(i=1;i<=9;i++) 
+	{ 
+		aa[i]=new Array()
+		for(j=1;j<=9;j++) 
+		{ 
+			aa[i][j]=1
+		} 
+	} 
+	aa[5][5]=9;
+	var MapX=5;
+	var MapY=5;
+	var DeathX=Math.round(Math.random()*8+1);
+	var DeathY=Math.round(Math.random()*8+1);
+	var score=0;
+	var bb=new Array()
+	for(i=1;i<=9;i++) 
+	{ 
+		bb[i]=new Array()
+		for(j=1;j<=9;j++) 
+		{ 
+			bb[i][j]=1
+		} 
+	} 
+	
+	for (var x in aa)
+	{
+		document.getElementById("array").innerHTML+=aa[x]+'<br/>'
+	}
+	document.getElementById("score").innerHTML='<br/>score='+score;
+	if(localStorage.highscore){}
+	else{
+		localStorage.highscore=1;
+	}
+	if (localStorage.pagecount){
+		localStorage.pagecount=Number(localStorage.pagecount)+1;
+	}
+	else{
+		localStorage.pagecount=1;
+	}
+	document.getElementById("highscore").innerHTML='highscore='+localStorage.highscore;
+	document.getElementById("attention").innerHTML="<br/>按键盘上的↑↓←→进行游戏,9x9的地图上有一个点埋藏着陷阱,到达此处就会死,每移动到没有去过的格子就会得一分,每得10分就会在那个格子中显示一个距离陷阱的距离.时间设定是24秒.<br/>祝你好运by蓓蕾";
+	for(i=0;i<=1000;i++)
+	{
+		if(localStorage.getItem("userSCore"+i)){
+			document.getElementById("Listofscore").innerHTML+='<div>'+localStorage.getItem("userName"+i)+' : '+localStorage.getItem("userSCore"+i)+'</div>';
+		}
+	}
+	for(i=1;i<=9;i++) 
+	{ 
+		for(j=1;j<=9;j++) 
+		{ 
+			document.getElementById("bw"+i+j).style.background='#'+aa[i][j]+aa[i][j]+aa[i][j]
+			/* document.getElementById("bw"+i+j).innerHTML=aa[i][j] */
+		}
+	} 
+	var maxtime = 24 ;
+	function CountDown()
+	{   
+		if(maxtime>=0)
+		{   
+			seconds = maxtime;   
+			document.getElementById('timer').innerHTML = "距离结束还有 "+seconds+" 秒";   
+			if(maxtime <= 5) document.getElementById('timer').innerHTML = "最后 "+seconds+" 秒"; 
+			--maxtime;   
+		}   
+		else
+		{   
+			clearInterval(timer);   
+			End();
+		}   
+	}   
+	timer = setInterval("CountDown()",1000);   
+	
+</script>
+</body>
+</html>
